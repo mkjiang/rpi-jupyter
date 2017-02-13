@@ -1,14 +1,14 @@
 # This file creates a container that runs a jupyter notebook server on Raspberry Pi
 #
 # Author: Max Jiang
-# Date 05/31/2016
+# Date 13/02/2017
 
 FROM resin/rpi-raspbian:jessie
 MAINTAINER Max Jiang <maxjiang@hotmail.com>
 
 # Set the variables
 ENV DEBIAN_FRONTEND noninteractive
-ENV PHTHON_VERSION 3.5.1
+ENV PHTHON_VERSION 3.6.0
 
 WORKDIR /root
 
@@ -39,7 +39,7 @@ RUN tar zxvf "Python-${PHTHON_VERSION}.tgz" \
 # Update pip and install jupyter
 RUN apt-get install -y libncurses5-dev
 RUN pip3 install --upgrade pip
-RUN pip3 install -y readline jupyter
+RUN pip3 install readline jupyter
 
 # Configure jupyter
 RUN jupyter notebook --generate-config
@@ -51,7 +51,7 @@ RUN sed -i "/c.NotebookApp.open_browser/c c.NotebookApp.open_browser = False" /r
 VOLUME /root/notebooks
 
 # Add Tini. Tini operates as a process subreaper for jupyter. This prevents kernel crashes.
-ENV TINI_VERSION 0.9.0
+ENV TINI_VERSION 0.14.0
 ENV CFLAGS="-DPR_SET_CHILD_SUBREAPER=36 -DPR_GET_CHILD_SUBREAPER=37"
 
 ADD https://github.com/krallin/tini/archive/v${TINI_VERSION}.tar.gz /root/v${TINI_VERSION}.tar.gz
