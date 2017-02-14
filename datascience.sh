@@ -7,7 +7,7 @@
 apt-get update && apt-get install -y vim wget
 
 # Required for sk-learn and pandas hdf5
-apt-get install libbz2-dev libhdf5-dev 
+apt-get install -y libbz2-dev libhdf5-dev 
 
 # Python packages for data science
-pip3 install numpy scipy panads scikit-learn sns tables matplotlib
+pip3 install numpy scipy pandas scikit-learn sns tables matplotlib
