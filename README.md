@@ -3,7 +3,7 @@ Jupyter Notebook Server on Raspberry Pi
 
 To have your own Jupyter Notebook Server running 24/7 on your Raspberry Pi. If connect it to your router, set up port forwarding and DDNS, you can carry out your Data Science tasks on the move, for free.
 
-Despite the fact that we adore Raspberry Pi and it is becoming more and more power, it is not intended to run large cpu intensive tasks. It will be slow and the best model only offers 1G of RAM. For larger datasets, you either need to use incremental machine learning algorithms or build a cluster and run Spark on it (which is what I am currently working on).
+Despite the fact that we adore Raspberry Pi and it is becoming more and more powerful, it is not intended to run large cpu intensive tasks. It will be slow and the best model only offers 1G of RAM. For larger datasets, you either need to use incremental machine learning algorithms or build a cluster and run Spark on it. I am currently working on the latter which would be interesting.
 
 ----------
 This is a dockfile for building rpi-jupyter. The image is built on a Raspberry Pi 3 running [Hypriot OS](http://blog.hypriot.com/). It is a minimal notebook server without additional packages.  
