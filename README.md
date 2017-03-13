@@ -8,6 +8,11 @@ Despite the fact that we adore Raspberry Pi and it is becoming more and more pow
 ----------
 This is a dockfile for building rpi-jupyter. The image is built on a Raspberry Pi 3 running [Hypriot OS](http://blog.hypriot.com/). It is a minimal notebook server without additional packages.  
 
+### Installing
+Go to [Hypriot OS](http://blog.hypriot.com/) and follow the steps to get the Raspberry Pi docker ready. Then, run the following:
+
+    docker pull maxjiang/rpi-jupyter
+
 ### Running in detached mode
     docker run -dp 8888:8888 maxjiang/rpi-jupyter 
 
@@ -24,7 +29,7 @@ The following command gives you a bash session in the running container so you c
 
     docker exec -it <container id> /bin/bash
 
-### For Data Scientist
+### For Data Scientists
 Use the above command to open a new bash session in your container and run the following:
 
     sh datascience.sh
