@@ -11,9 +11,10 @@ This is a dockfile for building rpi-jupyter. The image is built on a Raspberry P
 ### Installing
 Go to [Hypriot OS](http://blog.hypriot.com/) and follow the steps to get the Raspberry Pi docker ready. Then, run the following:
 
-Tags        Description
-1.1/latest  Python 3.6 Tini 0.14.0 jessie-20170315
-1.0         Python 3.5.1 Tini 0.9.0 jessie-20160525
+Tags | Description
+--- | ---
+1.1/latest | Python 3.6, Tini 0.14.0, jessie-20170315
+1.0 | Python 3.5.1, Tini 0.9.0, jessie-20160525
 
     docker pull maxjiang/rpi-jupyter<:tag>
 
@@ -21,7 +22,7 @@ Tags        Description
 ### Running in detached mode
     docker run -dp 8888:8888 maxjiang/rpi-jupyter 
 
-Now you can access your notebook at http://<docker host IP address>:8888
+Now you can access your notebook at `http://<docker host IP address>:8888`
 
 ### Configuration
 If you would like to change some config, create your own jupyter_notebook_config.py on the docker host and run the following:
