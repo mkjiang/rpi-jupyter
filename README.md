@@ -8,11 +8,16 @@ Despite the fact that we adore Raspberry Pi and it is becoming more and more pow
 ----------
 This is a dockfile for building rpi-jupyter. The image is built on a Raspberry Pi 3 running [Hypriot OS](http://blog.hypriot.com/). It is a minimal notebook server with [resin/rpi-raspbian:jessie](https://hub.docker.com/r/resin/rpi-raspbian/) as base image without additional packages.  
 
+Due to a popular python library called scikit-learn requires bzip2 library which needs to be installed before Python is compiled, I updated the image to 1.1.
+
+I have also built maxjiang/rpi-jupyter:datascience (based on 1.1) so that you have most of the data science packages installed without installing/compiling them yourself.
+
 ### Installing
 Go to [Hypriot OS](http://blog.hypriot.com/) and follow the steps to get the Raspberry Pi docker ready. Then, run the following:
 
 Tags | Description
 --- | ---
+datascience | numpy scipy scikit-learn pandas seaborn matplotlib
 1.1/latest | Python 3.6, Tini 0.14.0, jessie-20170315
 1.0 | Python 3.5.1, Tini 0.9.0, jessie-20160525
 
