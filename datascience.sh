@@ -4,10 +4,10 @@
 # I deliberately seperated this from the dockerfile to keep the docker image as clean as possible
 
 # Some useful tools
-apt-get update && apt-get install -y vim wget
+apt-get update && apt-get install -y vim wget git
 
-# Required for sk-learn and pandas hdf5
-apt-get install -y libbz2-dev libhdf5-dev 
+# Required for pandas hdf5, sci-pi
+apt-get install -y libhdf5-dev liblapack-dev gfortran
 
 # Python packages for data science
-pip3 install numpy scipy pandas scikit-learn sns tables matplotlib
+pip3 install numpy scipy pandas scikit-learn nltk seaborn tables matplotlib
