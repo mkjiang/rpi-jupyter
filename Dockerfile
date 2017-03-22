@@ -22,7 +22,8 @@ RUN apt-get update && apt-get upgrade && apt-get install -y \
         libsqlite3-dev \
         tk-dev \
         libssl-dev \
-        openssl
+        openssl \
+        libbz2-dev
 
 # Download and compile python
 RUN apt-get install -y ca-certificates
