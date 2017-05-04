@@ -48,7 +48,7 @@ The notebook will run under unpriviledged user `jovyan` (uid=1000) in group `use
 
     docker run -it docker run -it -p <host port>:<dest port> -v <path to your config file>:/home/jovyan/.jupyter/jupyter_notebook_config.py -v /some/host/folder/for/work:/home/jovyan/work  maxjiang/rpi-jupyter
 
-To login a bash session with rootless proviledges, use:
+To login a bash session with rootless priviledges, use:
 
     docker exec -it <container id> /bin/bash
 
