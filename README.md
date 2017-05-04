@@ -34,13 +34,13 @@ Now you can access your notebook at `http://<docker host IP address>:8888`
 ### Configuration
 The image already has following configuration:
 
-    * `c.NotebookApp.open_browser = False`
-    * `c.NotebookApp.ip = '*'`
-    * `c.NotebookApp.notebook_dir = '/home/jovyan/work'"`
+* `c.NotebookApp.open_browser = False`
+* `c.NotebookApp.ip = '*'`
+* `c.NotebookApp.notebook_dir = '/home/jovyan/work'"`
 
 If you would like to change some config, create your own jupyter_notebook_config.py (or use sample file from this repository) on the docker host and run the following:
 
-    docker run -it -p <host port>:<dest port> -v <path to your config file>:/root/.jupyter/jupyter_notebook_config.py maxjiang/rpi-jupyter
+    docker run -it -p <host port>:<dest port> -v <path to your config file>:/home/jovyan/.jupyter/jupyter_notebook_config.py maxjiang/rpi-jupyter
 
 This maps a local config file to the container.
 
