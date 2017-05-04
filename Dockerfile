@@ -55,11 +55,13 @@ RUN mkdir /home/$NB_USER/work && \
 
 # Configure jupyter
 RUN jupyter notebook --generate-config
-
+RUN sed -i "/c.NotebookApp.open_browser/c c.NotebookApp.open_browser = False" /home/$NB_USER/.jupyter/jupyter_notebook_config.py \      
+        && sed -i "/c.NotebookApp.ip/c c.NotebookApp.ip = '*'" /home/$NB_USER/.jupyter/jupyter_notebook_config.py \        
+        && sed -i "/c.NotebookApp.notebook_dir/c c.NotebookApp.notebook_dir = '/home/$NB_USER/work'" /home/$NB_USER/.jupyter/jupyter_notebook_config.py
 VOLUME /home/$NB_USER/work
 
-USER root
 # Add Tini. Tini operates as a process subreaper for jupyter. This prevents kernel crashes.
+USER root
 ENV TINI_VERSION 0.14.0
 ENV CFLAGS="-DPR_SET_CHILD_SUBREAPER=36 -DPR_GET_CHILD_SUBREAPER=37"
 
