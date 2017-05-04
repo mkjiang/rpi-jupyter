@@ -6,19 +6,16 @@
 FROM resin/rpi-raspbian:jessie
 MAINTAINER Max Jiang <maxjiang@hotmail.com>
 
+USER root
+
 # Set the variables
 ENV DEBIAN_FRONTEND noninteractive
 ENV PYTHON_VERSION 3.6.0
 ENV NB_USER jovyan
 ENV NB_UID 1000
 ENV HOME /home/$NB_USER
-ENV LC_ALL en_US.UTF-8
-ENV LANG en_US.UTF-8
-ENV LANGUAGE en_US.UTF-8
 
-RUN useradd -m -s /bin/bash -N -u $NB_UID $NB_USER && \
-    chown $NB_USER
-
+RUN useradd -m -s /bin/bash -N -u $NB_UID $NB_USER 
 
 # Install packages necessary for compiling python
 RUN apt-get update && apt-get upgrade && apt-get install -y \
@@ -35,7 +32,7 @@ RUN apt-get update && apt-get upgrade && apt-get install -y \
 
 # Download and compile python
 RUN apt-get install -y ca-certificates
-ADD "https://www.python.org/ftp/python/${PYTHON_VERSION}/Python-${PYTHON_VERSION}.tgz" /root/Python-${PYTHON_VERSION}.tgz
+ADD "https://www.python.org/ftp/python/${PYTHON_VERSION}/Python-${PYTHON_VERSION}.tgz" Python-${PYTHON_VERSION}.tgz
 RUN tar zxvf "Python-${PYTHON_VERSION}.tgz" \
         && cd Python-${PYTHON_VERSION} \
         && ./configure \
@@ -50,20 +47,23 @@ RUN apt-get install -y libncurses5-dev
 RUN pip3 install --upgrade pip
 RUN pip3 install readline jupyter
 
+USER $NB_USER
+# Setup jovyan home directory
+RUN mkdir /home/$NB_USER/work && \
+    mkdir /home/$NB_USER/.jupyter && \
+    echo "cacert=/etc/ssl/certs/ca-certificates.crt" > /home/$NB_USER/.curlrc
+
 # Configure jupyter
 RUN jupyter notebook --generate-config
-RUN mkdir notebooks
-RUN sed -i "/c.NotebookApp.open_browser/c c.NotebookApp.open_browser = False" /root/.jupyter/jupyter_notebook_config.py \
-        && sed -i "/c.NotebookApp.ip/c c.NotebookApp.ip = '*'" /root/.jupyter/jupyter_notebook_config.py \
-        && sed -i "/c.NotebookApp.notebook_dir/c c.NotebookApp.notebook_dir = '/root/notebooks'" /root/.jupyter/jupyter_notebook_config.py
 
-VOLUME /root/notebooks
+VOLUME /home/$NB_USER/work
 
+USER root
 # Add Tini. Tini operates as a process subreaper for jupyter. This prevents kernel crashes.
 ENV TINI_VERSION 0.14.0
 ENV CFLAGS="-DPR_SET_CHILD_SUBREAPER=36 -DPR_GET_CHILD_SUBREAPER=37"
 
-ADD https://github.com/krallin/tini/archive/v${TINI_VERSION}.tar.gz /root/v${TINI_VERSION}.tar.gz
+ADD https://github.com/krallin/tini/archive/v${TINI_VERSION}.tar.gz v${TINI_VERSION}.tar.gz
 RUN apt-get install -y cmake
 RUN tar zxvf v${TINI_VERSION}.tar.gz \
         && cd tini-${TINI_VERSION} \
@@ -82,4 +82,6 @@ WORKDIR /home/$NB_USER/work
 
 CMD ["jupyter", "notebook"]
 RUN chown -R $NB_USER:users /home/$NB_USER/.jupyter
+
 USER $NB_USER
+
