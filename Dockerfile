@@ -28,7 +28,8 @@ RUN apt-get update && apt-get upgrade && apt-get install -y \
         tk-dev \
         libssl-dev \
         openssl \
-        libbz2-dev
+        libbz2-dev \
+        vim
 
 # Download and compile python
 RUN apt-get install -y ca-certificates
@@ -81,9 +82,9 @@ ENTRYPOINT ["/usr/bin/tini", "--"]
 EXPOSE 8888
 WORKDIR /home/$NB_USER/work
 
-
 CMD ["jupyter", "notebook"]
-RUN chown -R $NB_USER:users /home/$NB_USER/.jupyter
+RUN chown -R $NB_USER:users /home/$NB_USER
 
 USER $NB_USER
+COPY datascience.sh /home/$NB_USER/
 
