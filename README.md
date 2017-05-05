@@ -59,6 +59,6 @@ If you want to start bash session with root accesss so you could do more, just u
 ### For Data Scientists
 Use the above command to open a new bash session in your container and run the following:
 
-    sh datascience.sh
+    cd ../ && sh datascience.sh
     
 This will install almost all the Python modules you need for most Data Science tasks.
