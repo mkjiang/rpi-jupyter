@@ -13,7 +13,10 @@ Due to a popular python library called scikit-learn requires bzip2 library which
 I have also built maxjiang/rpi-jupyter:datascience (based on 1.1) so that you have most of the data science packages installed without installing/compiling them yourself.
 
 ### Installing
-Go to [Hypriot OS](http://blog.hypriot.com/) and follow the steps to get the Raspberry Pi docker ready. Then, run the following:
+Go to [Hypriot OS](https://blog.hypriot.com/downloads) and follow the steps to get this OS. However if you have [Raspbian Jessie](https://www.raspberrypi.org/downloads/raspbian/) OS installed, you are totally fine too, it will work. 
+Then, run the following:
+
+    docker pull maxjiang/rpi-jupyter<:tag>
 
 Tags | Description
 --- | ---
@@ -21,28 +24,41 @@ datascience | numpy scipy scikit-learn pandas seaborn matplotlib
 1.1/latest | Python 3.6, Tini 0.14.0, jessie-20170315
 1.0 | Python 3.5.1, Tini 0.9.0, jessie-20160525
 
-    docker pull maxjiang/rpi-jupyter<:tag>
-
 
 ### Running in detached mode
-    docker run -dp 8888:8888 maxjiang/rpi-jupyter 
+
+    docker run -d -p 8888:8888 maxjiang/rpi-jupyter 
 
 Now you can access your notebook at `http://<docker host IP address>:8888`
 
 ### Configuration
-If you would like to change some config, create your own jupyter_notebook_config.py on the docker host and run the following:
+The image already has following configuration:
 
-    docker run -itp <host port>:<dest port> -v <path to your config file>:/root/.jupyter/jupyter_notebook_config.py maxjiang/rpi-jupyter
+* `c.NotebookApp.open_browser = False`
+* `c.NotebookApp.ip = '*'`
+* `c.NotebookApp.notebook_dir = '/home/jovyan/work'"`
+
+If you would like to change some config, create your own jupyter_notebook_config.py (or use sample file from this repository) on the docker host and run the following:
+
+    docker run -it -p <host port>:<dest port> -v <path to your config file>:/home/jovyan/.jupyter/jupyter_notebook_config.py maxjiang/rpi-jupyter
 
 This maps a local config file to the container.
 
-The following command gives you a bash session in the running container so you could do more:
+The notebook will run under unpriviledged user `jovyan` (uid=1000) in group `users` with ownership of `/home/jovyan`. If you want to mount your default working directory on the host to preserve work even when notebook is not running or destroyed, use additional `-v` option:
+
+    docker run -it docker run -it -p <host port>:<dest port> -v <path to your config file>:/home/jovyan/.jupyter/jupyter_notebook_config.py -v /some/host/folder/for/work:/home/jovyan/work  maxjiang/rpi-jupyter
+
+To login a bash session with rootless priviledges, use:
 
     docker exec -it <container id> /bin/bash
+
+If you want to start bash session with root accesss so you could do more, just use this command:
+
+    docker exec -it -u 0 <container id> /bin/bash
 
 ### For Data Scientists
 Use the above command to open a new bash session in your container and run the following:
 
-    sh datascience.sh
+    cd ../ && sh datascience.sh
     
 This will install almost all the Python modules you need for most Data Science tasks.
