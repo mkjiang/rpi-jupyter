@@ -54,7 +54,7 @@ To login a bash session with rootless priviledges, use:
 
 If you want to start bash session with root accesss so you could do more, just use this command:
 
-    docker exec -it <container id> -u 0 /bin/bash
+    docker exec -it -u 0 <container id> /bin/bash
 
 ### For Data Scientists
 Use the above command to open a new bash session in your container and run the following:
