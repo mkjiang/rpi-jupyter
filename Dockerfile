@@ -8,7 +8,7 @@ MAINTAINER Max Jiang <maxjiang@hotmail.com>
 
 # Set the variables
 ENV DEBIAN_FRONTEND noninteractive
-ENV PHTHON_VERSION 3.6.0
+ENV PYTHON_VERSION 3.6.0
 
 WORKDIR /root
 
@@ -27,15 +27,15 @@ RUN apt-get update && apt-get upgrade && apt-get install -y \
 
 # Download and compile python
 RUN apt-get install -y ca-certificates
-ADD "https://www.python.org/ftp/python/${PHTHON_VERSION}/Python-${PHTHON_VERSION}.tgz" /root/Python-${PHTHON_VERSION}.tgz
-RUN tar zxvf "Python-${PHTHON_VERSION}.tgz" \
-        && cd Python-${PHTHON_VERSION} \
+ADD "https://www.python.org/ftp/python/${PYTHON_VERSION}/Python-${PYTHON_VERSION}.tgz" /root/Python-${PYTHON_VERSION}.tgz
+RUN tar zxvf "Python-${PYTHON_VERSION}.tgz" \
+        && cd Python-${PYTHON_VERSION} \
         && ./configure \
         && make \
         && make install \
         && cd .. \
-        && rm -rf "./Python-${PHTHON_VERSION}" \
-        && rm "./Python-${PHTHON_VERSION}.tgz"
+        && rm -rf "./Python-${PYTHON_VERSION}" \
+        && rm "./Python-${PYTHON_VERSION}.tgz"
 
 # Update pip and install jupyter
 RUN apt-get install -y libncurses5-dev
